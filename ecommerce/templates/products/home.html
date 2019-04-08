@@ -1,0 +1,31 @@
+{% extends "base.html"%}
+{% block head_block %}
+<link rel="stylesheet" href="/css/master.css">
+{% endblock %}
+{% block title_head %}
+HOME
+{% endblock %}
+
+{% block content %}
+{% load staticfiles %}
+<div class="row">
+{% for product in products %}
+<div class="col-sm-3">
+  <div class="thumbnail">
+{% for item in product.productimage_set.all %}
+{% if item.featured %}
+<a href="{{ product.get_absolute_url }}"><img class = "img-thumbnail img-responsive autosetter" src="{{ MEDIA_URL }}{{ item.image }}"></a>
+{% endif %}
+{% endfor %}
+<div class="caption">
+  <a href="{{ product.get_absolute_url }}"><h3>{{product.title}}</h3></a>
+<p>{{product.price}}</p>
+<p><a class = "btn btn-primary" href="{{ product.get_absolute_url }}" role = "button">VIEW</a></p>
+</div>
+</div>
+</div>
+
+{% cycle "" "" "" "</div><div class='row'>" %}
+{% endfor %}
+</div>
+{% endblock %}
